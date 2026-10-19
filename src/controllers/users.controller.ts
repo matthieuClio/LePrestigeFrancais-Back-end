@@ -2,9 +2,9 @@
 import { Request, Response, NextFunction } from "express";
 
 // Models
-import { addUserModel } from "../models/users.model.js";
+import { addUserModel, displayUsersByIdModel } from "../models/users.model.js";
 
-async function controllerAddUser (req: Request, res: Response, next: NextFunction) {
+async function addUserController (req: Request, res: Response, next: NextFunction) {
 
     try {
         const userRequest = await addUserModel(req.body);
@@ -14,5 +14,18 @@ async function controllerAddUser (req: Request, res: Response, next: NextFunctio
         next(error);
     }
 }
+ 
+async function getUserById (req: Request, res: Response, next: NextFunction) {
 
-export { controllerAddUser };
+    const urlCleaned = req.url.replace('/', '');
+
+    try {
+        const specificUser = await displayUsersByIdModel(urlCleaned);
+        res.json(specificUser);
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+export { addUserController, getUserById };
