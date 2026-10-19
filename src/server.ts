@@ -10,7 +10,7 @@ import pool from './config/database.js';
 // Port use by the application
 const PORT = Number(process.env.EXPRESS_PORT);
 
-// Start the server with the correct port
+// Ensure to start the server with the correct port
 function serverStart () {
     // Issues with the port
     if (Number.isNaN(PORT)) {
