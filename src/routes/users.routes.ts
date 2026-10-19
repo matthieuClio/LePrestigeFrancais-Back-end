@@ -2,7 +2,7 @@
 import express from 'express';
 
 // Middlewares
-import { checkBodyMiddleware } from '../controllers/middleware/users.middleware.js';
+import { checkBodyMiddleware } from '../middleware/users.middleware.js';
 
 // Controllers
 import { controllerAddUser } from '../controllers/users.controller.js';

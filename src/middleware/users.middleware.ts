@@ -13,7 +13,7 @@ function checkBodyMiddleware (req: Request, res: Response, next: NextFunction) {
     }
 
     // Check type of name and email data
-    if (typeof userData.email !== "string" && typeof userData.password !== "string") {
+    if (typeof userData.email !== "string" || typeof userData.password !== "string") {
         return res.status(400).json({
             message: "Email and password aren't string types"
         });
@@ -26,6 +26,13 @@ function checkBodyMiddleware (req: Request, res: Response, next: NextFunction) {
     if (!emailRegex.test(userData.email)) {
         return res.status(400).json({
             message: "Email doesn't respect a correct format"
+        });
+    }
+    
+    // Check length of password
+    if (userData.password.length < 12) {
+        return res.status(400).json({
+            message: "The length of the password must be equal or superior at 12"
         });
     }
 

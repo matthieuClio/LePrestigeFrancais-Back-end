@@ -9,7 +9,7 @@ async function addUserModel (userReq: {email: string, password: string}) {
     
     const passwordHashed = await bcrypt.hash(password, 10);
 
-    const addUserRequest = await pool.query('INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING email', [email, passwordHashed]);
+    const addUserRequest = await pool.query('INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id, email', [email, passwordHashed]);
     return addUserRequest.rows[0];
 }
 
