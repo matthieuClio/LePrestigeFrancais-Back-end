@@ -1,6 +1,9 @@
 // Express
 import express from 'express';
 
+// Routes
+import routerUser from './routes/users.routes.js';
+
 const app = express();
 
 app.use(express.json()); // Parse the body
@@ -12,5 +15,7 @@ app.get('/health', (req, res) => {
         status: 'ok'
     });
 });
+
+app.use('/', routerUser);
 
 export default app;
