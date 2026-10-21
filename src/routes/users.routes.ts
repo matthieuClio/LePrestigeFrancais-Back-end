@@ -12,7 +12,7 @@ const routerUser = express.Router();
 
 routerUser.post('/', checkBodyMiddleware, addUserController);
 
-routerUser.get('/:id', loginUserController);
+routerUser.post('/login', checkBodyMiddleware, loginUserController);
 
 // Export
 export default routerUser;

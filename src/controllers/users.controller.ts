@@ -2,7 +2,10 @@
 import { Request, Response, NextFunction } from "express";
 
 // Models
-import { addUserModel, displayUsersByIdModel } from "../models/users.model.js";
+import { addUserModel, loginModel } from "../models/users.model.js";
+
+// Bcrypt
+import bcrypt from 'bcrypt';
 
 async function addUserController (req: Request, res: Response, next: NextFunction) {
 
@@ -17,30 +20,36 @@ async function addUserController (req: Request, res: Response, next: NextFunctio
  
 async function loginUserController (req: Request, res: Response, next: NextFunction) {
 
-    // Get id from url
-    const idUrl = Number(req.params.id);
+    // Get body user
+    const userBody = req.body;
 
-    // Check if the id is valid
-    if (typeof idUrl !== "number" || idUrl < 0) {
-
-        return res.status(400).json({
-            message: "he ID is not a number or it is lower than 0"
-        });
-    }
-
-    try {
+     try {
         // Get the user requested
-        const specificUser = await displayUsersByIdModel(idUrl);
+        const login = await loginModel(userBody);
 
         // User not found
-        if (!specificUser) {
+        if (!login) {
             return res.status(404).json({
-                message: 'User not found'
+                message: 'Login has fail, user not found'
             });
         }
+        
+        // Login
+        const loginChecked = await bcrypt.compare(userBody.password, login.password_hash);
 
-        // User found
-        res.json(specificUser);
+        // Login failed
+        if (!loginChecked) {
+            return res.status(401).json({
+                message: 'Incorrect password'
+            })
+        }
+        // Login success
+        res.json({
+            id: login.id,
+            email: login.email,
+            message: 'Login success'
+        });
+
 
     } catch (error) {
         next(error);
