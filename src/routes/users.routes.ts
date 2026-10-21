@@ -5,12 +5,14 @@ import express from 'express';
 import { checkBodyMiddleware } from '../middleware/users.middleware.js';
 
 // Controllers
-import { controllerAddUser } from '../controllers/users.controller.js';
+import { addUserController, loginUserController } from '../controllers/users.controller.js';
 
 // Router
 const routerUser = express.Router();
 
-routerUser.post('/', checkBodyMiddleware, controllerAddUser);
+routerUser.post('/', checkBodyMiddleware, addUserController);
+
+routerUser.post('/login', checkBodyMiddleware, loginUserController);
 
 // Export
 export default routerUser;
