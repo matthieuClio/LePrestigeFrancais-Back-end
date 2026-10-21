@@ -13,7 +13,7 @@ async function addUserModel (userReq: {email: string, password: string}) {
     return addUserRequest.rows[0];
 }
 
-async function displayUsersByIdModel (idUser: string) {
+async function displayUsersByIdModel (idUser: number) {
     const displayUserRequest = await pool.query('SELECT id, email FROM users WHERE id = $1', [idUser]);
     return displayUserRequest.rows[0];
 }

@@ -16,6 +16,6 @@ app.get('/health', (req, res) => {
     });
 });
 
-app.use('/', routerUser);
+app.use('/users', routerUser);
 
 export default app;

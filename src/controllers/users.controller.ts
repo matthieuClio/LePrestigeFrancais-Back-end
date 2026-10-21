@@ -15,12 +15,31 @@ async function addUserController (req: Request, res: Response, next: NextFunctio
     }
 }
  
-async function getUserById (req: Request, res: Response, next: NextFunction) {
+async function loginUserController (req: Request, res: Response, next: NextFunction) {
 
-    const urlCleaned = req.url.replace('/', '');
+    // Get id from url
+    const idUrl = Number(req.params.id);
+
+    // Check if the id is valid
+    if (typeof idUrl !== "number" || idUrl < 0) {
+
+        return res.status(400).json({
+            message: "he ID is not a number or it is lower than 0"
+        });
+    }
 
     try {
-        const specificUser = await displayUsersByIdModel(urlCleaned);
+        // Get the user requested
+        const specificUser = await displayUsersByIdModel(idUrl);
+
+        // User not found
+        if (!specificUser) {
+            return res.status(404).json({
+                message: 'User not found'
+            });
+        }
+
+        // User found
         res.json(specificUser);
 
     } catch (error) {
@@ -28,4 +47,4 @@ async function getUserById (req: Request, res: Response, next: NextFunction) {
     }
 }
 
-export { addUserController, getUserById };
+export { addUserController, loginUserController };
