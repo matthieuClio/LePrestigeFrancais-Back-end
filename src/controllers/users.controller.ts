@@ -24,13 +24,13 @@ async function loginUserController (req: Request, res: Response, next: NextFunct
     const userBody = req.body;
 
      try {
-        // Get the user requested
+        // Get user informations
         const login = await loginModel(userBody);
 
         // User not found
         if (!login) {
             return res.status(404).json({
-                message: 'Login has fail, user not found'
+                message: 'Invalid credentials'
             });
         }
         
