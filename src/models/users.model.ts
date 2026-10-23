@@ -13,4 +13,9 @@ async function addUserModel (userReq: {email: string, password: string}) {
     return addUserRequest.rows[0];
 }
 
-export { addUserModel };
+async function showUserById (id: number) {
+    const userInfos = await pool.query('SELECT email, id FROM users WHERE id = $1', [id]);
+    return userInfos.rows[0];
+}
+
+export { addUserModel, showUserById };
