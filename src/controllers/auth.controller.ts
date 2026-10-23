@@ -50,12 +50,17 @@ async function authController (req: Request, res: Response, next: NextFunction) 
         // Login success
         // Define a token
         const token = jwt.sign(
-            { id: login.id },
+            { 
+                id: login.id,
+                email: login.email
+            },
             process.env.JWT_SECRET,
             { expiresIn: '7d' }
         );
 
         res.json({
+            id: login.id,
+            email: login.email,
             token: token
         });
 

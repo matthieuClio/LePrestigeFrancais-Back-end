@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from "express";
 
 // Models
-import { addUserModel } from "../models/users.model.js";
+import { addUserModel, showUserById } from "../models/users.model.js";
 
 // Add user
 async function addUserController (req: Request, res: Response, next: NextFunction) {
@@ -16,4 +16,23 @@ async function addUserController (req: Request, res: Response, next: NextFunctio
     }
 }
 
-export { addUserController };
+// Show informations user
+async function showUserController (req: Request, res: Response, next: NextFunction) {
+    const idUser = req.user?.id
+
+    if (!idUser) {
+        return res.status(401).json({
+            message: 'ID is not define'
+        });
+    }
+
+    try {
+        const userRequest = await showUserById(idUser);
+        res.json(userRequest);
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+export { addUserController, showUserController };
