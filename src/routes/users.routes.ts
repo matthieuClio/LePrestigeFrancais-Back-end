@@ -2,17 +2,16 @@
 import express from 'express';
 
 // Middlewares
-import { checkBodyMiddleware } from '../middleware/users.middleware.js';
+import { checkBodyMiddleware } from '../middlewares/checkBody.middleware.js';
 
 // Controllers
-import { addUserController, loginUserController } from '../controllers/users.controller.js';
+import { addUserController } from '../controllers/users.controller.js';
 
 // Router
-const routerUser = express.Router();
+const userRouter = express.Router();
 
-routerUser.post('/', checkBodyMiddleware, addUserController);
-
-routerUser.post('/login', checkBodyMiddleware, loginUserController);
+// Add user
+userRouter.post('/', checkBodyMiddleware, addUserController);
 
 // Export
-export default routerUser;
+export default userRouter;

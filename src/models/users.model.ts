@@ -1,4 +1,4 @@
-// Connexion database
+// Database connexion
 import pool from "../config/database.js";
 
 // Bcrypt
@@ -13,11 +13,4 @@ async function addUserModel (userReq: {email: string, password: string}) {
     return addUserRequest.rows[0];
 }
 
-async function loginModel (loginInformations: { email: string }) {
-    const { email } = loginInformations;
-
-    const displayUserRequest = await pool.query('SELECT id, email, password_hash FROM users WHERE email = $1', [email]);
-    return displayUserRequest.rows[0];
-}
-
-export { addUserModel, loginModel };
+export { addUserModel };
